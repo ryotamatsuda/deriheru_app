@@ -1,0 +1,11 @@
+<h1>新規オペレーター登録</h1>
+<%= render 'layouts/validation_error_message', instance: @operator %>
+<%= form_with model: @operator, url: admins_operators_path, local: true do |f| %>
+  <p>名前</p>
+  <%= f.text_field :name %>
+  <p>ログインID</p>
+  <%= f.text_field :login_id %>
+  <p>初期パスワード</p>
+  <span><%= Rails.application.credentials.operator[:default_password] %></span>
+  <%= f.submit '送信' %>
+<% end %>

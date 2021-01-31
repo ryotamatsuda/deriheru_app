@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>DeriheruApp</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-12" style="padding: 0;">
+          <header>
+            <% if admin_signed_in? %>
+              <div class="header-left-menu">
+                <span class="sidebar-button">menu</span>
+              </div>
+              <div class="header-right-menu">
+                <span class="logout"><%= link_to 'ログアウト', destroy_admin_session_path, method: :delete %></span>
+                <span class="user_kind">管理者</span>
+              </div>
+            <% elsif operator_signed_in? %>
+              <div class="header-left-menu">
+                <span class="sidebar-button">menu</span>
+                <span class="new-first-time-link"><%= link_to '新規顧客受注', operators_new_first_time_order_path %></span>
+                <span class="new-secound-time-link"><%= link_to '既存顧客受注', operators_new_secound_time_order_path %></span>
+              </div>
+              <div class="header-right-menu">
+                <span class="logout"><%= link_to 'ログアウト', destroy_operator_session_path, method: :delete %></span>
+                <span class="user_kind"><%= current_operator.name %></span>
+              </div>
+            <% end %>
+          </header>
+          <% if flash %>
+            <% flash.each do |flash_key, flash_value| %>
+              <div class="flash-message <%= flash_key %>-flash-message">
+                <p style='margin: 0 auto;'><%= flash_value %></p>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-2 sidebar">
+        </div>
+        <div class="col-lg-10">
+          <%= yield %>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
